@@ -1,41 +1,35 @@
-let searchQuery = '';
-const SearchResultDiv = document.querySelector('.serach-result');
-const search = document.querySelector('Form');
-search.addEventListener('submit', (e) => {
+let Input = '';
+const Resultat = document.querySelector('.serach-result');
+const Boutton = document.querySelector('Form');
+Boutton.addEventListener('submit', (e) => {
     e.preventDefault();
-    searchQuery = e.target.querySelector('input').value;
-    fetchApi();
+    Input = e.target.querySelector('input').value;
+    Users();
 })
-function fetchApi() {
-    const url = `https://randomuser.me/api/?results=10&q=${searchQuery}`;
-    fetch(url).then((response) =>
-        response.json().then((data) => {
-            console.log(data);
-            generateHTML(data.results);
+function Users() {
+    fetch(`https://randomuser.me/api/?results=10&q=${Input}`).then((response) =>
+        response.json()
+            .then((data) => {
+                console.log(data);
+                afficheCard(data.results);
 
-        })
+            })
     )
 
 
 }
 
 
-function generateHTML(results) {
-    let generatedHTML = '';
+function afficheCard(results) {
+    let codeHTML = '';
     results.map(result => {
-        generatedHTML +=
-
-
-
+        codeHTML +=
 
             `
-                 
-
-
   <div class="card" style="width: 18rem;">
   <img src="${result.picture.large}" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title">${result.name.first}+${result.name.last}</h5>
+    <h5 class="card-title">${result.name.first}  ${result.name.last}</h5>
     <p class="card-text">${result.email}</p>
      <p class="card-text">${result.gender}</p>
     <a href="#" class="btn btn-primary">Go somewhere</a>
@@ -44,6 +38,6 @@ function generateHTML(results) {
                 
    `
     })
-    SearchResultDiv.innerHTML = generatedHTML;
+    Resultat.innerHTML = codeHTML;
 }
 
